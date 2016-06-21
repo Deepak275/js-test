@@ -43,9 +43,9 @@ exports.stringsAnswers = {
               results.push(strArr[i])
 
               break;
-            } else {
-              break;
-            }
+            }// else {
+            //   break;
+            // }
           } else {
             flag = 1;
           }
@@ -93,14 +93,14 @@ exports.stringsAnswers = {
   },
 
   wordWrap: function(str, cols) {
-    
+
   },
 
   reverseString: function(str) {
-    var results = '';
+    var result = '';
      for (var i = str.length - 1; i >= 0; i--) {
       result += str[i];
      }
-     return results;
+     return result;
   }
 };
