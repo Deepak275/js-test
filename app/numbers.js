@@ -21,6 +21,11 @@ exports.numbersAnswers = {
   },
 
   multiply: function(a, b) {
+    var common = 1000000;
 
+    a *= common;
+    b *= common;
+
+    return ( a * b ) / (common * common) ;
   }
 };

@@ -6,7 +6,24 @@ exports.recursionAnswers = {
   },
 
   permute: function(arr) {
+  var results = [];
 
+    function permute1(arr, memo) {
+      var cur, memo = memo || [];
+
+      for (var i = 0; i < arr.length; i++) {
+        cur = arr.splice(i, 1);
+        if (arr.length === 0) {
+          results.push(memo.concat(cur));
+        }
+        permute1(arr.slice(), memo.concat(cur));
+        arr.splice(i, 0, cur[0]);
+      }
+
+      return results;
+    }
+
+    return permute1(arr);
   },
 
   fibonacci: function(n) {
@@ -26,13 +43,28 @@ exports.recursionAnswers = {
   },
 
   validParentheses: function(n) {
-
+    var results = [];
   }
 };
 
 
 
-//
+function permute(input) {
+  var i, ch;
+  for (i = 0; i < input.length; i++) {
+    ch = input.splice(i, 1)[0];
+    usedChars.push(ch);
+    if (input.length == 0) {
+      permArr.push(usedChars.slice());
+    }
+    permute(input);
+    input.splice(i, 0, ch);
+    usedChars.pop();
+  }
+  return permArr;
+};
+
+
 // function permute(arr, memo) {
 //     var cur, memo = memo || [];
 //

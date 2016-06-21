@@ -32,7 +32,7 @@ exports.functionsAnswers = {
   partial: function(fn, str1, str2) {
     return (function (str3) {
       return (fn(str1, str2, str3));
-    })
+    });
   },
 
   useArguments: function() {
@@ -44,18 +44,46 @@ exports.functionsAnswers = {
   },
 
   callIt: function(fn) {
-    
+
+    var args = Array.prototype.slice.call(arguments, 1, arguments.length )
+
+    fn.call(this, ...args);
+    //for  > than ES6, USE fn.apply(this, args);
   },
 
   partialUsingArguments: function(fn) {
-    // var args = Array.prototype.slice.call(arguments, 1, arguments.length);
-    // return function() {
-    //   var moreArgs = args.concat(Array.prototype.slice.call(arguments));
-    //   return fn.apply(null, moreArgs);
-    // };
+    var args = Array.prototype.slice.call(arguments, 1, arguments.length);
+    return function() {
+      var allArgs = args.concat(Array.prototype.slice.call(arguments));
+      return fn.apply(null, allArgs);
+    };
+
+    });
+
   },
 
   curryIt: function(fn) {
+
+    function applyArguments(_fn, args) {
+      return _fn.apply(null, args);
+    }
+
+    function getArgumentAccumulator(accumulatedArguments, expectedArgumentsCount) {
+      return function (currentArgument) {
+        accumulatedArguments.push(currentArgument);
+
+        var allArgumentsProvided = accumulatedArguments.length === expectedArgumentsCount;
+
+        if (allArgumentsProvided) {
+          return applyArguments(fn, accumulatedArguments);
+        }
+
+        return getArgumentAccumulator(accumulatedArguments, expectedArgumentsCount);
+      };
+    }
+
+    return getArgumentAccumulator([], fn.length);
+  }
 
   }
 };
