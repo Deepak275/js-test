@@ -12,7 +12,7 @@ exports.bestPracticesAnswers = {
     var myObject = {
       name: 'Jory'
     };
-
+    
     return myObject;
   },
 

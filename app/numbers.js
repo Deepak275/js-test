@@ -7,12 +7,12 @@ exports.numbersAnswers = {
   },
 
   base10: function(str) {
-    return parseInt(str, 2); // default valu to 10
+    return parseInt(str, 2); // default value to 10
   },
 
   convertToBinary: function(num) {
 
-    binAry = (num).toString(2).split(''); // default valu to 10
+    binAry = (num).toString(2).split(''); // default value to 10
 
     for (var i = binAry.length; i < 8; i++) {
       binAry.unshift(0);

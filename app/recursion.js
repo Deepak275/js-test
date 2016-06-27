@@ -6,24 +6,34 @@ exports.recursionAnswers = {
   },
 
   permute: function(arr) {
-  var results = [];
+    var index, stage = 0, temp = [], results = [];
 
-    function permute1(arr, memo) {
-      var cur, memo = memo || [];
-
-      for (var i = 0; i < arr.length; i++) {
-        cur = arr.splice(i, 1);
-        if (arr.length === 0) {
-          results.push(memo.concat(cur));
-        }
-        permute1(arr.slice(), memo.concat(cur));
-        arr.splice(i, 0, cur[0]);
+    function per(temp, stage) {
+      if (stage >= arr.length ) {
+        results.push(temp);
+        //temp.pop();
+        return;
       }
 
-      return results;
+      for (var i = 0; i < arr.length; i++) {
+        // // temp[stage] = input[i];
+        // checkRepitation(temp.slice(0, stage), i);
+        if (temp.indexOf(arr[i]) === -1 && i > index) {
+          temp.push(arr[i]);
+          index = i, stage++;
+          per(temp.slice(), stage);
+
+        }
+      }
     }
 
-    return permute1(arr);
+    for (var i = 0; i < arr.length; i++) {
+      temp.length = 0, index = -1;
+      temp[0] = arr[i];
+      per(temp, stage + 1);
+    }
+
+    return results;
   },
 
   fibonacci: function(n) {
@@ -49,21 +59,29 @@ exports.recursionAnswers = {
 
 
 
-function permute(input) {
-  var i, ch;
-  for (i = 0; i < input.length; i++) {
-    ch = input.splice(i, 1)[0];
-    usedChars.push(ch);
-    if (input.length == 0) {
-      permArr.push(usedChars.slice());
-    }
-    permute(input);
-    input.splice(i, 0, ch);
-    usedChars.pop();
-  }
-  return permArr;
-};
+// function permute(input) {
+//
+// }
 
+
+// var results = [];
+//
+//   function permute1(arr, memo) {
+//     var cur, memo = memo || [];
+//
+//     for (var i = 0; i < arr.length; i++) {
+//       cur = arr.splice(i, 1);
+//       if (arr.length === 0) {
+//         results.push(memo.concat(cur));
+//       }
+//       permute1(arr.slice(), memo.concat(cur));
+//       arr.splice(i, 0, cur[0]);
+//     }
+//
+//     return results;
+//   }
+//
+//   return permute1(arr);
 
 // function permute(arr, memo) {
 //     var cur, memo = memo || [];

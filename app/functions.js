@@ -62,7 +62,26 @@ exports.functionsAnswers = {
 
   curryIt: function(fn) {
 
+    function applyArguments(fn, args) {
+      return fn.apply(null, args);
+    }
 
+    function collectArguments(a, required) {
+      return function (b) {
+        a.push(b);
+
+        var total = a.length === required;
+
+        if (total) {
+          return applyArguments(fn, a);
+        }
+
+        return collectArguments(a, required);
+      };
+    }
+
+    return collectArguments([], fn.length);
 
   }
+
 };
