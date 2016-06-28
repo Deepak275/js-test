@@ -15,22 +15,25 @@ exports.asyncAnswers = {
   },
 
   manipulateRemoteData: function(url) {
-      var urlObj = require('url').format(url);
-      var promise = new promise(function (resolve, reject) {
-        require('request')(urlObj, function (err, res) {
-          if (err) {
-            reject(err);
-          }
 
-          var names  = _map(res, function (person) {
-            return person.name;
-          });
-        });
+    var promise = new Promise(function (resolve, reject) {
+      var xhr = new XMLHttpRequest();
 
-        resolve(names.sort());
+      xhr.open('GET', url);
+      xhr.send();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      }
+    });
+      return promise.then(function (response) {
+        console.log('async', response);
+        var data = JSON.parse(response).people;
+        var names = data.map( (key) => {
+         return key.name
+       })
+       //console.log(names);
+       return names.sort();
 
       });
-
-      return promise.then(results);
   }
 };

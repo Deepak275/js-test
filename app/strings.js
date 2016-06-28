@@ -76,7 +76,41 @@ exports.stringsAnswers = {
   },
 
   wordWrap: function(str, cols) {
-    
+
+    var strArr = str.split('');
+    var i = cols;
+
+     function forward() {
+       for (i; i < strArr.length; i++) {
+         if (strArr[i] === ' ') {
+           console.log(i);
+           strArr[i] = '\n';
+           i += cols;
+           return;
+         }
+       }
+     }
+
+      function previous() {
+       for (i; i > 0; i--) {
+         if (strArr[i] === ' ') {
+          strArr[i] = '\n';
+          i += cols;
+          console.log('in the strArr', strArr, i);
+          return;
+        }
+       }
+       forward();
+     }
+
+      while (i < strArr.length) {
+
+        console.log(strArr);
+        previous();
+     }
+      // console.log('Output',strArr);
+      return strArr.join('')
+
   },
 
   reverseString: function(str) {

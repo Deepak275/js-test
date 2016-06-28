@@ -6,12 +6,14 @@ exports.recursionAnswers = {
   },
 
   permute: function(arr) {
-    var index, stage = 0, temp = [], results = [];
+    var stage = 0, temp = [], results = [];
 
     function per(temp, stage) {
+      var index = -1;
       if (stage >= arr.length ) {
-        results.push(temp);
-        //temp.pop();
+        results.push(temp.slice());
+        // console.log('combination : ', temp);
+        temp.pop();
         return;
       }
 
@@ -19,24 +21,31 @@ exports.recursionAnswers = {
         // // temp[stage] = input[i];
         // checkRepitation(temp.slice(0, stage), i);
         if (temp.indexOf(arr[i]) === -1 && i > index) {
+          // console.log('in the second loop :i, index, temp', i, index, temp, stage);
           temp.push(arr[i]);
-          index = i, stage++;
-          per(temp.slice(), stage);
-
+          index = i;
+          // console.log('in the second loop :i, index, temp', i, index, temp, stage);
+          per(temp.slice(), stage + 1);
+          temp.pop();
         }
       }
+
     }
 
+    // console.log(arr);
     for (var i = 0; i < arr.length; i++) {
-      temp.length = 0, index = -1;
-      temp[0] = arr[i];
-      per(temp, stage + 1);
-    }
 
+      temp = [] , index = -1;
+      // console.log('temp for each :', temp);
+      temp.push(arr[i]);
+      // console.log('in the first loop, temp and stage :', temp, stage, i );
+      per(temp.slice(), stage + 1);
+    }
+    // console.log('final results', results);
     return results;
   },
 
-  fibonacci: function(n) {
+  fibonacci: function(n, b) {
     if(n === 0) {
       return 0;
     }
@@ -53,8 +62,24 @@ exports.recursionAnswers = {
   },
 
   validParentheses: function(n) {
-    var results = [];
-  }
+    var combination = [];
+//http://stackoverflow.com/questions/3172179/valid-permutation-of-parenthesis
+    function bracesCombo(left, right, current) {
+             if (left == 0 && right == 0) {
+                 combination.push(current);
+              }
+              if (left > 0) {
+                 bracesCombo(left - 1, right + 1, current + '(');
+              }
+              if (right > 0) {
+                 bracesCombo(left, right - 1, current + ')');
+              }
+              return combination;
+          };
+
+      return bracesCombo(n, 0, '');
+
+    }
 };
 
 
