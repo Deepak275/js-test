@@ -83,7 +83,7 @@ exports.stringsAnswers = {
      function forward() {
        for (i; i < strArr.length; i++) {
          if (strArr[i] === ' ') {
-           console.log(i);
+          //  console.log(i);
            strArr[i] = '\n';
            i += cols;
            return;
@@ -96,7 +96,7 @@ exports.stringsAnswers = {
          if (strArr[i] === ' ') {
           strArr[i] = '\n';
           i += cols;
-          console.log('in the strArr', strArr, i);
+          // console.log('in the strArr', strArr, i);
           return;
         }
        }
@@ -105,7 +105,7 @@ exports.stringsAnswers = {
 
       while (i < strArr.length) {
 
-        console.log(strArr);
+        // console.log(strArr);
         previous();
      }
       // console.log('Output',strArr);

@@ -2,8 +2,73 @@ exports = typeof window === 'undefined' ? global : window;
 
 exports.recursionAnswers = {
   listFiles: function(data, dirName) {
+    console.log('data and dirname : ', data, dirName);
+    var listOfFiles = [], files = data.files;
+    var subDir = dirName;
+    var regex = new RegExp('.*(\.'+ dirName +')$', 'i');
 
-  },
+    function fileAccumulator(files) {
+
+
+
+        for (var i = 0; i < files.length; i++) {
+          if (typeof files[i] !== 'string') {
+
+            fileAccumulator(files[i].files);
+
+          } else {
+            listOfFiles.push(files[i]);
+
+          }
+        }
+        return;
+    }
+
+    function forSubDir (files) {
+      for (var i = 0; i < files.length; i++) {
+
+        if (regex.test(files[i])) {
+          listOfFiles.push(files[i]);
+        }
+
+        if (typeof files[i] !== 'string' ) {
+
+            forSubDir(files[i].files);
+        }
+      }
+    }
+
+
+  if (dirName) {
+    forSubDir(files)
+  } else {
+    fileAccumulator(files);
+  }
+
+
+
+
+      // else {
+      //
+      //   for (var i = 0; i < files.length; i++) {
+      //     if (typeof files[i] !== 'string' && files[i].dir === dirName) {
+      //       listOfFiles.push(files[i].files);
+      //
+      //     }
+      //   }
+      //   // var dirIndex = files.indexOf(dirName) > -1 ?  files.indexOf(dirName) : -1;
+      //   // if (dirIndex > -1) {
+      //   //   fileAccumulator(files[i].files);
+      //   // }
+      // }
+
+
+
+
+    //fileAccumulator(files);
+    console.log('results', listOfFiles);
+    return listOfFiles;
+},
 
   permute: function(arr) {
     var stage = 0, temp = [], results = [];
@@ -55,7 +120,7 @@ exports.recursionAnswers = {
     }
 
     if ( n > 1 ) {
-      return (this.fibonacci(n-1) + this.fibonacci (n-2) );
+      return (this.fibonacci(n-1) + this.fibonacci (n-2));
     }
 
     return -1;
@@ -63,23 +128,26 @@ exports.recursionAnswers = {
 
   validParentheses: function(n) {
     var combination = [];
-//http://stackoverflow.com/questions/3172179/valid-permutation-of-parenthesis
+
     function bracesCombo(left, right, current) {
-             if (left == 0 && right == 0) {
-                 combination.push(current);
-              }
-              if (left > 0) {
-                 bracesCombo(left - 1, right + 1, current + '(');
-              }
-              if (right > 0) {
-                 bracesCombo(left, right - 1, current + ')');
-              }
-              return combination;
-          };
-
-      return bracesCombo(n, 0, '');
-
+      // console.log('combn array', combination);
+      if (left == 0 && right == 0) {
+        combination.push(current);
+      }
+      if (left > 0) {
+        // console.log('in the left check !!');
+        bracesCombo(left - 1, right + 1, current + '(');
+      }
+      if (right > 0) {
+        // console.log('in the right check !!');
+        bracesCombo(left, right - 1, current + ')');
+      }
+      return combination;
     }
+
+    return bracesCombo(n, 0, '');
+  }
+
 };
 
 
@@ -88,7 +156,7 @@ exports.recursionAnswers = {
 //
 // }
 
-
+//http://stackoverflow.com/questions/3172179/valid-permutation-of-parenthesis
 // var results = [];
 //
 //   function permute1(arr, memo) {

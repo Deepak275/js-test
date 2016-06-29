@@ -7,7 +7,7 @@ exports.asyncAnswers = {
 
       setTimeout(function () {
         resolve(value)
-      }, 100);
+      }, 10);
       //  resolve(value);
     });
 
@@ -18,15 +18,19 @@ exports.asyncAnswers = {
 
     var promise = new Promise(function (resolve, reject) {
       var xhr = new XMLHttpRequest();
-
       xhr.open('GET', url);
       xhr.send();
+      // xhr.onreadystatechange = function () {
+      //   resolve(xhr.response);
+      // }
+
       xhr.onload = function () {
         resolve(xhr.response);
       }
+
     });
       return promise.then(function (response) {
-        console.log('async', response);
+        // console.log('async', response);
         var data = JSON.parse(response).people;
         var names = data.map( (key) => {
          return key.name
